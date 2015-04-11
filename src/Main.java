@@ -4,7 +4,7 @@ public class Main {
 	static String originFilePath="C:\\Users\\Xuping Fang\\Documents\\origin.bvh";
 	static String badFilePath="C:\\Users\\Xuping Fang\\Documents\\bad.bvh";
 	
-	static int packageCapacity=100;
+	static int packageCapacity=5;
 	static double errorRate=0.5;
 	
 	static String zeroInsertionRecoveredFilePath="C:\\Users\\Xuping Fang\\Documents\\ZeroInsertion.bvh";

@@ -25,7 +25,7 @@ public class BezierCurve {
 	
 	public void runRecovery(){
 		
-		ArrayList<ArrayList<Double>> nodes=this.matrixTransfromation(this.inputData.getBadDataCopy());
+		ArrayList<ArrayList<Double>> nodes=this.matrixTransformation(this.inputData.getBadDataCopy());
 		
 		
 		for(ArrayList<Double> currentNode : nodes){
@@ -35,7 +35,7 @@ public class BezierCurve {
 		this.writeRecoveryFile(this.inputData.getBvhHeader());
 	}
 	
-	private ArrayList<ArrayList<Double>> matrixTransfromation(ArrayList<ArrayList<Double>> frames){
+	private ArrayList<ArrayList<Double>> matrixTransformation(ArrayList<ArrayList<Double>> frames){
 		
 		ArrayList<ArrayList<Double>> nodes=new ArrayList<ArrayList<Double>>();
 		
