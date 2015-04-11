@@ -47,10 +47,10 @@ public class TempReplacement {
 			}
 		}
 		
-		this.writeBadFile(frames);
+		this.writeFile(frames);
 	}
 	
-	private void writeBadFile(ArrayList<ArrayList<Double>> frames){
+	private void writeFile(ArrayList<ArrayList<Double>> frames){
 		
 		PrintWriter printWriter;
 		

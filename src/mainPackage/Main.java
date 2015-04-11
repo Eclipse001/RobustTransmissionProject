@@ -3,6 +3,7 @@ import assistClass.InputData;
 import assistClass.RMSCalculator;
 import singleRecoveryMethods.AveragingMethod;
 import singleRecoveryMethods.BezierCurve;
+import singleRecoveryMethods.CombinationMethod;
 import singleRecoveryMethods.TempReplacement;
 import singleRecoveryMethods.TempReplacementBackward;
 import singleRecoveryMethods.ZeroInsertion;
@@ -26,6 +27,8 @@ public class Main {
 	
 	static String bezierCurveRecoveredFilePath="C:\\Users\\Xuping Fang\\Documents\\bezierCurve.bvh";
 	
+	static String combinedRecoveredFilePath="C:\\Users\\Xuping Fang\\Documents\\combined.bvh";
+	
 
 	public static void main(String[] args) {
 		
@@ -42,7 +45,25 @@ public class Main {
 		runBackwardTempReplacement(inputData);
 		
 		runZeroInsertion(inputData);
+		
+		
+		runCombinationMethod(inputData);
 
+	}
+	
+	private static void runCombinationMethod(InputData inputData){
+		CombinationMethod cm=new CombinationMethod(inputData,combinedRecoveredFilePath,true,200);
+		
+		cm.doRecovery();
+		
+		RMSCalculator rmsC=new RMSCalculator();
+		
+		rmsC.originFilePath=originFilePath;
+		rmsC.recoveredFilePath=combinedRecoveredFilePath;
+		
+		System.out.print("RMS value for combined method: ");
+		
+		rmsC.doCaculation();
 	}
 	
 	private static void runBezierCurve(InputData inputData){
