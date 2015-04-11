@@ -4,11 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import blockRecovery.AvgBlockRecovery;
 import blockRecovery.BezierCurveBlockRecovery;
 import blockRecovery.TempRepBlockRecovery;
 import blockRecovery.ZeroInsertionBlockRecovery;
+import assistClass.Boundary;
 import assistClass.InputData;
 
 public class CombinationMethod {
@@ -21,12 +23,17 @@ public class CombinationMethod {
 	private int numOfFrames;
 	
 	private boolean useTempReplacement=true;
-	private int bound;
+	
+	private Boundary bezierCurveBoundary;
+	private Boundary tempReplacementBoundary;
 	
 	private final int BEZIER_CURVE = 145;
 	private final int AVG_RECOVER = 876;
+	private final int TEMP_REP = 1348;
+	private final int TEMP_REP_BACK = -1347;
 
-	public CombinationMethod(InputData inputData,String recoveredFilePath,boolean useTempReplacement,int bound){
+	public CombinationMethod(InputData inputData,String recoveredFilePath,
+			boolean useTempReplacement,Boundary avgBoundary,Boundary bezierCurveBoundary,Boundary tempReplacementBoundary){
 		
 		this.recoveredFilePath=recoveredFilePath;
 		
@@ -37,9 +44,10 @@ public class CombinationMethod {
 		this.numOfFrames=inputData.getNumOfFrames();
 		this.numOfNodes=inputData.getNumOfNodes();
 		
-		this.bound=bound;
-		
 		this.useTempReplacement=useTempReplacement;
+		
+		this.bezierCurveBoundary=bezierCurveBoundary;
+		this.tempReplacementBoundary=tempReplacementBoundary;
 	}
 	
 	public void doRecovery(){
@@ -66,7 +74,8 @@ public class CombinationMethod {
 					
 					passingNullBlock=false;
 					
-					if(nullBlockCnt>this.bound && beacon-1>=0 && index+1<this.numOfFrames && this.frames.get(beacon-1)!=null && this.frames.get(index+1)!=null){
+					if(nullBlockCnt<=this.bezierCurveBoundary.getUpperBound() && nullBlockCnt>=this.bezierCurveBoundary.getLowerBound()
+							/*SSA*/ && beacon-1>=0 && index+1<this.numOfFrames && this.frames.get(beacon-1)!=null && this.frames.get(index+1)!=null){
 						
 						ArrayList<ArrayList<Double>> block=new ArrayList<ArrayList<Double>>();
 						
@@ -76,6 +85,25 @@ public class CombinationMethod {
 						
 						this.singleBlockRecovery(beacon-1,index+1,BEZIER_CURVE,block);
 					}
+					
+					else if(nullBlockCnt<=this.tempReplacementBoundary.getUpperBound() && nullBlockCnt>=this.tempReplacementBoundary.getLowerBound()){
+						
+						ArrayList<ArrayList<Double>> block=new ArrayList<ArrayList<Double>>();
+						
+						for(int fillIndex=beacon;fillIndex<=index;fillIndex++){
+							block.add(this.frames.get(fillIndex));
+						}
+						
+						if(this.useForward()){
+							block.remove(block.size()-1);
+							this.singleBlockRecovery(beacon, index-1, TEMP_REP, block);
+						}
+						else{
+							block.remove(0);
+							this.singleBlockRecovery(beacon+1, index, TEMP_REP_BACK, block);
+						}
+					}
+					
 					else{
 						
 						ArrayList<ArrayList<Double>> block=new ArrayList<ArrayList<Double>>();
@@ -106,6 +134,14 @@ public class CombinationMethod {
 		
 		this.writeFile(frames);
 		
+	}
+	
+	private Boolean useForward(){
+		Random random=new Random();
+		if(random.nextDouble()<=0.5){
+			return true;
+		}
+		return false;
 	}
 	
 	private void writeFile(ArrayList<ArrayList<Double>> frames){
@@ -163,6 +199,14 @@ public class CombinationMethod {
 		
 		else if(methodCode==this.AVG_RECOVER){
 			recoveredBlock=(new AvgBlockRecovery(block).doBlockRecovery());
+		}
+		
+		else if(methodCode==this.TEMP_REP){
+			recoveredBlock=(new TempRepBlockRecovery(block,true).doBlockRecovery());
+		}
+		
+		else if(methodCode==this.TEMP_REP_BACK){
+			recoveredBlock=(new TempRepBlockRecovery(block,false).doBlockRecovery());
 		}
 		
 		int index=0;

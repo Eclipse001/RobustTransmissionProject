@@ -1,4 +1,5 @@
 package mainPackage;
+import assistClass.Boundary;
 import assistClass.InputData;
 import assistClass.RMSCalculator;
 import singleRecoveryMethods.AveragingMethod;
@@ -14,7 +15,7 @@ public class Main {
 	static String originFilePath="C:\\Users\\Xuping Fang\\Documents\\origin.bvh";
 	static String badFilePath="C:\\Users\\Xuping Fang\\Documents\\bad.bvh";
 	
-	static int packageCapacity=5;
+	static int packageCapacity=200;
 	static double errorRate=0.5;
 	
 	static String zeroInsertionRecoveredFilePath="C:\\Users\\Xuping Fang\\Documents\\ZeroInsertion.bvh";
@@ -52,7 +53,13 @@ public class Main {
 	}
 	
 	private static void runCombinationMethod(InputData inputData){
-		CombinationMethod cm=new CombinationMethod(inputData,combinedRecoveredFilePath,true,200);
+		
+		Boundary avgBoundary=new Boundary(0,5);
+		Boundary bezierCurveBoundary=new Boundary(6,20);
+		Boundary tempReplacementBoundary=new Boundary(21,Integer.MAX_VALUE);
+		
+		CombinationMethod cm=new CombinationMethod(inputData,combinedRecoveredFilePath,
+				true,avgBoundary,bezierCurveBoundary,tempReplacementBoundary);
 		
 		cm.doRecovery();
 		
@@ -123,7 +130,7 @@ private static void runBackwardTempReplacement(InputData inputData){
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=tempReplacementBackwardRecoveredFilePath;
 		
-		System.out.print("RMS value for backward temp replacement (previous): ");
+		System.out.print("RMS value for backward temp replacement: ");
 		rmsC.doCaculation();
 	}
 	
