@@ -102,7 +102,7 @@ private static void runBackwardTempReplacement(InputData inputData){
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=tempReplacementBackwardRecoveredFilePath;
 		
-		System.out.print("RMS value for back temp replacement (previous): ");
+		System.out.print("RMS value for backward temp replacement (previous): ");
 		rmsC.doCaculation();
 	}
 	
