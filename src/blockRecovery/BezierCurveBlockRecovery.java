@@ -1,6 +1,5 @@
 package blockRecovery;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import beizerCurveCore.Casteljau;
 
@@ -59,10 +58,18 @@ public class BezierCurveBlockRecovery {
 			recoveredFrameBlock.add(currentFrame);
 		}
 		
-		recoveredFrameBlock.remove(0);
-		recoveredFrameBlock.remove(0);
-		recoveredFrameBlock.remove(recoveredFrameBlock.size()-1);
-		recoveredFrameBlock.remove(recoveredFrameBlock.size()-1);
+		// --Should be removed?
+		// recoveredFrameBlock.remove(0);
+		// recoveredFrameBlock.remove(0);
+		// recoveredFrameBlock.remove(recoveredFrameBlock.size()-1);
+		// recoveredFrameBlock.remove(recoveredFrameBlock.size()-1);
+		
+		if(recoveredFrameBlock.size() != this.frameBlock.size()){
+			System.out.println("Error");
+		}
+		if(recoveredFrameBlock.get(0).size() != this.frameBlock.get(0).size()){
+			System.out.println("Error");
+		}
 		
 		return recoveredFrameBlock;
 	}
@@ -99,92 +106,33 @@ public class BezierCurveBlockRecovery {
 		}
 	}
 	
-	private ArrayList<Double> colRecovery(ArrayList<Double> col){
+	private ArrayList<Double> colRecovery(ArrayList<Double> colBlock){
 		
-		ArrayList<ArrayList<Double>> dataFragments = new ArrayList<ArrayList<Double>>();
+		ArrayList<Double> head=new ArrayList<Double>();
+		ArrayList<Double> middle;
+		ArrayList<Double> tail=new ArrayList<Double>();
 		
-		int index=0;
-		
-		boolean firstFragNull=false;
-		boolean currentNullFlag=false;
-		
-		ArrayList<Double> currentFrag=new ArrayList<Double>();
-		
-		for(index=0;index<col.size();index++){
-			
-			Double currentVal=col.get(index);
-			
-			if(currentVal==null && index==0){
-				firstFragNull=true;
-				currentNullFlag=true;
-			}
-			
-			// Fragmentation operation:
-			
-			if(currentVal!=null && currentNullFlag){
-				currentNullFlag=false;
-				dataFragments.add(currentFrag);
-				currentFrag=new ArrayList<Double>();
-			}
-			else if(currentVal==null && currentNullFlag==false){
-				currentNullFlag=true;
-				dataFragments.add(currentFrag);
-				currentFrag=new ArrayList<Double>();
-			}
-			
-			currentFrag.add(currentVal);
-		}
-		dataFragments.add(currentFrag);
-		
-		//=====================================================
-		
-		int recoverIndex=0;
-		
-		if(firstFragNull){
-			ArrayList<Double> current=dataFragments.get(0);
-			Collections.fill(current,0.0);
-			dataFragments.set(0,current);
-			recoverIndex=1;
+		for (int index=0; index<2; index++){
+			head.add(colBlock.get(index));
 		}
 		
-		while(recoverIndex+2<dataFragments.size()){
-			ArrayList<Double> head=dataFragments.get(recoverIndex);
-			ArrayList<Double> middle=dataFragments.get(recoverIndex+1);
-			ArrayList<Double> tail=dataFragments.get(recoverIndex+2);
-			
-			ArrayList<ArrayList<Double>> recoveredSet=null;
-			
-			if(head.size()>=2 && tail.size()>=2){
-				// 4 control points recovery
-				recoveredSet=singleRecoveryWithFourCP(head,middle,tail);
-			}
-			
-			else{
-				// 2 control points recovery
-				System.out.println("Error! No 2Cp!");
-			}
-			
-			dataFragments.set(recoverIndex,recoveredSet.get(0));
-			dataFragments.set(recoverIndex+1,recoveredSet.get(1));
-			dataFragments.set(recoverIndex+2,recoveredSet.get(2));
-			
-			recoverIndex+=2;
+		for (int index=colBlock.size()-2; index<colBlock.size(); index++){
+			tail.add(colBlock.get(index));
 		}
 		
+		colBlock.remove(0);
+		colBlock.remove(0);
+		colBlock.remove(colBlock.size()-1);
+		colBlock.remove(colBlock.size()-1);
 		
-		ArrayList<Double> recoveredCol=new ArrayList<Double>();
 		
-		for(ArrayList<Double> recoveredFrag : dataFragments){
-			if(recoveredFrag.get(0)==null){
-				Collections.fill(recoveredFrag,0.0);
-			}
-			recoveredCol.addAll(recoveredFrag);
-		}
+		middle=colBlock;
 		
-		return recoveredCol;
+		return this.singleRecoveryWithFourCP(head, middle, tail);
 	}
 	
-	private ArrayList<ArrayList<Double>> singleRecoveryWithFourCP(ArrayList<Double> head,ArrayList<Double> middle,ArrayList<Double> tail){
+	private ArrayList<Double> singleRecoveryWithFourCP(ArrayList<Double> head,ArrayList<Double> middle,ArrayList<Double> tail){
+		
 		ArrayList<Double> inputValueSet=new ArrayList<Double>();
 		inputValueSet.add(head.get(head.size()-2));
 		inputValueSet.add(head.get(head.size()-1));
@@ -209,12 +157,12 @@ public class BezierCurveBlockRecovery {
 		
 		tail.set(0,casteljau.getValue(t));
 		
-		ArrayList<ArrayList<Double>> recoveredSet = new ArrayList<ArrayList<Double>>();
+		ArrayList<Double> recoveredBlock = new ArrayList<Double>();
 		
-		recoveredSet.add(head);
-		recoveredSet.add(middle);
-		recoveredSet.add(tail);
+		recoveredBlock.addAll(head);
+		recoveredBlock.addAll(middle);
+		recoveredBlock.addAll(tail);
 		
-		return recoveredSet;
+		return recoveredBlock;
 	}
 }
