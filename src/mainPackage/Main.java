@@ -4,6 +4,7 @@ import assistClass.RMSCalculator;
 import singleRecoveryMethods.AveragingMethod;
 import singleRecoveryMethods.BezierCurve;
 import singleRecoveryMethods.TempReplacement;
+import singleRecoveryMethods.TempReplacementBackward;
 import singleRecoveryMethods.ZeroInsertion;
 
 
@@ -16,8 +17,13 @@ public class Main {
 	static double errorRate=0.5;
 	
 	static String zeroInsertionRecoveredFilePath="C:\\Users\\Xuping Fang\\Documents\\ZeroInsertion.bvh";
+	
 	static String averagingMethodRecoveredFilePath="C:\\Users\\Xuping Fang\\Documents\\AveragingMethod.bvh";
+	
 	static String tempReplacementRecoveredFilePath="C:\\Users\\Xuping Fang\\Documents\\TempReplacement.bvh";
+	static String tempReplacementBackwardRecoveredFilePath="C:\\Users\\Xuping Fang\\Documents\\TempReplacementBack.bvh";
+	
+	
 	static String bezierCurveRecoveredFilePath="C:\\Users\\Xuping Fang\\Documents\\bezierCurve.bvh";
 	
 
@@ -31,7 +37,10 @@ public class Main {
 		
 		runBezierCurve(inputData);
 		runAveragingMethod(inputData);
+		
 		runTempReplacement(inputData);
+		runBackwardTempReplacement(inputData);
+		
 		runZeroInsertion(inputData);
 
 	}
@@ -79,6 +88,21 @@ public class Main {
 		rmsC.recoveredFilePath=tempReplacementRecoveredFilePath;
 		
 		System.out.print("RMS value for temp replacement (previous): ");
+		rmsC.doCaculation();
+	}
+	
+private static void runBackwardTempReplacement(InputData inputData){
+		
+		TempReplacementBackward tr=new TempReplacementBackward(inputData,tempReplacementBackwardRecoveredFilePath);
+		
+		tr.runRecovery();
+		
+		RMSCalculator rmsC=new RMSCalculator();
+		
+		rmsC.originFilePath=originFilePath;
+		rmsC.recoveredFilePath=tempReplacementBackwardRecoveredFilePath;
+		
+		System.out.print("RMS value for back temp replacement (previous): ");
 		rmsC.doCaculation();
 	}
 	
