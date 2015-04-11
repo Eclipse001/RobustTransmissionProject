@@ -1,3 +1,11 @@
+package mainPackage;
+import assistClass.InputData;
+import assistClass.RMSCalculator;
+import singleRecoveryMethods.AveragingMethod;
+import singleRecoveryMethods.BezierCurve;
+import singleRecoveryMethods.TempReplacement;
+import singleRecoveryMethods.ZeroInsertion;
+
 
 public class Main {
 	

@@ -1,3 +1,4 @@
+package beizerCurveCore;
 
 /** Taken from http://math.stackexchange.com/questions/43947/casteljaus-algorithm-practical-example**/
 

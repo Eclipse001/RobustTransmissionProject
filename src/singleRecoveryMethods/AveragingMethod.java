@@ -1,7 +1,10 @@
+package singleRecoveryMethods;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+
+import assistClass.InputData;
 
 
 public class AveragingMethod {

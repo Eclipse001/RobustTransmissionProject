@@ -1,16 +1,19 @@
+package singleRecoveryMethods;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import assistClass.InputData;
 
-public class ZeroInsertion {
+
+public class TempReplacement {
 	
 	private String recoveredFilePath;
 	
 	private InputData inputData;
 	
-	public ZeroInsertion(InputData inputData,String recoveredFilePath){
+	public TempReplacement(InputData inputData,String recoveredFilePath){
 		
 		this.inputData=inputData;
 		this.recoveredFilePath=recoveredFilePath;
@@ -19,7 +22,8 @@ public class ZeroInsertion {
 	public void runRecovery(){
 		
 		ArrayList<ArrayList<Double>> frames=this.inputData.getBadDataCopy();
-
+		
+		ArrayList<Double> prevValidFrame=null;
 		
 		ArrayList<Double> currentFrame=null;
 		
@@ -29,8 +33,17 @@ public class ZeroInsertion {
 			
 			if(currentFrame==null){
 				
-				frames.set(index,getLineWithAllZeros());
+				if(prevValidFrame==null){
+					frames.set(index,getLineWithAllZeros());
+				}
+				else{
+					frames.set(index,prevValidFrame);
+				}
 				
+			}
+			else{
+				
+				prevValidFrame=this.makeCopy(currentFrame);
 			}
 		}
 		
@@ -80,6 +93,17 @@ public class ZeroInsertion {
 		}
 	}
 	
+	private ArrayList<Double> makeCopy(ArrayList<Double> src){
+		
+		ArrayList<Double> cpy=new ArrayList<Double>();
+		
+		for(Double currentVal : src){
+			cpy.add(currentVal);
+		}
+		
+		return cpy;
+	}
+	
 	private ArrayList<Double> getLineWithAllZeros(){
 		
 		ArrayList<Double> zeros= new ArrayList<Double>();
@@ -91,3 +115,4 @@ public class ZeroInsertion {
 		return zeros;
 	}
 }
+

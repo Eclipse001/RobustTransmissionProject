@@ -1,3 +1,4 @@
+package mainPackage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +8,8 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import assistClass.InputData;
 
 
 public class PackageLossSimulator {
