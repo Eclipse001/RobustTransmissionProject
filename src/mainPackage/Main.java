@@ -15,7 +15,7 @@ public class Main {
 	static String originFilePath="C:\\Users\\Xuping Fang\\Documents\\origin.bvh";
 	static String badFilePath="C:\\Users\\Xuping Fang\\Documents\\bad.bvh";
 	
-	static int packageCapacity=200;
+	static int packageCapacity=2;
 	static double errorRate=0.5;
 	
 	static String zeroInsertionRecoveredFilePath="C:\\Users\\Xuping Fang\\Documents\\ZeroInsertion.bvh";
@@ -54,9 +54,9 @@ public class Main {
 	
 	private static void runCombinationMethod(InputData inputData){
 		
-		Boundary avgBoundary=new Boundary(0,5);
-		Boundary bezierCurveBoundary=new Boundary(6,20);
-		Boundary tempReplacementBoundary=new Boundary(21,Integer.MAX_VALUE);
+		Boundary avgBoundary=new Boundary(0,10);
+		Boundary bezierCurveBoundary=new Boundary(0,200);
+		Boundary tempReplacementBoundary=new Boundary(201,Integer.MAX_VALUE);
 		
 		CombinationMethod cm=new CombinationMethod(inputData,combinedRecoveredFilePath,
 				true,avgBoundary,bezierCurveBoundary,tempReplacementBoundary);
