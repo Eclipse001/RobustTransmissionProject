@@ -20,7 +20,7 @@ public class AvgBlockRecovery {
 	}
 	
 	/**
-	 * The method which perform the averaging recovery method.
+	 * The function which perform the averaging recovery method.
 	 * @return : Recovered frame block in the ArrayList<ArrayList<Double>> type.
 	 */
 	public ArrayList<ArrayList<Double>> doBlockRecovery(){

@@ -264,7 +264,7 @@ public class BezierCurve {
 		inputValueSet.add(tail.get(0));
 		inputValueSet.add(tail.get(1));
 		
-		// Get the difference of each point along the curve.
+		// Get the number of points along the curve.
 		int n=middle.size()+3;
 		
 		// Calculate the t value difference for each point among the curve.
