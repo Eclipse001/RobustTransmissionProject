@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.commons.math3.stat.correlation.SpearmansCorrelation;
+
 public class RMSCalculator{
 	
 	public String originFilePath;
@@ -13,6 +15,7 @@ public class RMSCalculator{
 	
 	private ArrayList<String> originalFrames;
 	private ArrayList<String> recoveredFrames;
+	private static SpearmansCorrelation sc = new SpearmansCorrelation();
 	
 	public RMSCalculator(){
 		
@@ -110,37 +113,35 @@ public class RMSCalculator{
 			return;
 		}
 		
-		Double sumSquare=0.0;
+		String[] test = originalFrames.get(0).split("\\s+");
+		double[] original = new double[frameNum];
+		double[] recovered = new double[frameNum];
 		
-		for(int i=0;i<frameNum;i++){
+		lineLen=test.length;
+		int divider = lineLen;
+		double sum = 0.0;
+		
+		for (int i=0;i<lineLen;i++){
 			
-			String[] originalCurrLine = originalFrames.get(i).split("\\s+");
-			String[] recoveredCurrLine = recoveredFrames.get(i).split("\\s+");
-			
-			lineLen=originalCurrLine.length;
-			
-			Double lineSumSquare=0.0;
-			
-			for(int j=0;j<lineLen;j++){
-				Double originVal=Double.parseDouble(originalCurrLine[j]);
-				Double recoveredVal=Double.parseDouble(recoveredCurrLine[j]);
+			for(int j=0;j<frameNum;j++){
+				String[] originalCurrLine = originalFrames.get(j).split("\\s+");
+				String[] recoveredCurrLine = recoveredFrames.get(j).split("\\s+");
 				
-				Double currDiff=Math.abs(originVal-recoveredVal);
-				
-				lineSumSquare+=Math.pow(currDiff,2);
+				original[j] = Double.parseDouble(originalCurrLine[i]);
+				recovered[j] = Double.parseDouble(recoveredCurrLine[i]);
 			}
 			
-			Double lineMeanSquare=lineSumSquare/(double)lineLen;
-			
-			sumSquare+=lineMeanSquare;
-			
+			double num = sc.correlation(original, recovered);
+			if(!(Double.isNaN(num))){
+				sum += num;
+			}
+			else{
+				divider -= 1;
+			}
 		}
 		
-		Double rms=Math.pow(sumSquare/(double)frameNum,(double)0.5);
-		
-		System.out.println(rms.toString());
+		System.out.println(1-(sum/divider));
 		
 	}
 	
 }
-
