@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import org.apache.commons.math3.stat.correlation.SpearmansCorrelation;
 
-public class RMSCalculator{
+public class CorrelationCalculator{
 	
 	public String originFilePath;
 	public String recoveredFilePath;
@@ -18,7 +18,7 @@ public class RMSCalculator{
 	
 	private static SpearmansCorrelation sc = new SpearmansCorrelation();
 	
-	public RMSCalculator(){
+	public CorrelationCalculator(){
 		
 	}
 	

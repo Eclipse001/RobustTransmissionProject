@@ -1,7 +1,7 @@
 package mainPackage;
 import assistClass.Boundary;
 import assistClass.InputData;
-import assistClass.RMSCalculator;
+import assistClass.CorrelationCalculator;
 import singleRecoveryMethods.AveragingMethod;
 import singleRecoveryMethods.BezierCurve;
 import singleRecoveryMethods.CombinationMethod;
@@ -63,7 +63,7 @@ public class Main {
 		
 		cm.doRecovery();
 		
-		RMSCalculator rmsC=new RMSCalculator();
+		CorrelationCalculator rmsC=new CorrelationCalculator();
 		
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=combinedRecoveredFilePath;
@@ -79,7 +79,7 @@ public class Main {
 		
 		bc.runRecovery();
 		
-		RMSCalculator rmsC=new RMSCalculator();
+		CorrelationCalculator rmsC=new CorrelationCalculator();
 		
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=bezierCurveRecoveredFilePath;
@@ -95,7 +95,7 @@ public class Main {
 		
 		am.runRecovery();
 		
-		RMSCalculator rmsC=new RMSCalculator();
+		CorrelationCalculator rmsC=new CorrelationCalculator();
 		
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=averagingMethodRecoveredFilePath;
@@ -110,7 +110,7 @@ public class Main {
 		
 		tr.runRecovery();
 		
-		RMSCalculator rmsC=new RMSCalculator();
+		CorrelationCalculator rmsC=new CorrelationCalculator();
 		
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=tempReplacementRecoveredFilePath;
@@ -125,7 +125,7 @@ private static void runBackwardTempReplacement(InputData inputData){
 		
 		tr.runRecovery();
 		
-		RMSCalculator rmsC=new RMSCalculator();
+		CorrelationCalculator rmsC=new CorrelationCalculator();
 		
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=tempReplacementBackwardRecoveredFilePath;
@@ -140,7 +140,7 @@ private static void runBackwardTempReplacement(InputData inputData){
 		
 		zi.runRecovery();
 		
-		RMSCalculator rmsC=new RMSCalculator();
+		CorrelationCalculator rmsC=new CorrelationCalculator();
 		
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=zeroInsertionRecoveredFilePath;
