@@ -18,6 +18,7 @@ public class Casteljau {
     }
 
     private void init(Double[] initialValues) {
+    	
         for (int i = 0; i < n; i++) {
             b[0][i] = initialValues[i];
         }
@@ -37,6 +38,5 @@ public class Casteljau {
         double val = evaluate(t,initialValues);
         return val;
     }
-
 }
 
