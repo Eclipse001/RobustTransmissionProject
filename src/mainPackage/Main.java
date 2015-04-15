@@ -68,7 +68,7 @@ public class Main {
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=combinedRecoveredFilePath;
 		
-		System.out.print("RMS value for combined method: ");
+		System.out.print("Correlation value for combined method: ");
 		
 		rmsC.doCaculation();
 	}
@@ -84,7 +84,7 @@ public class Main {
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=bezierCurveRecoveredFilePath;
 		
-		System.out.print("RMS value for bezier curve with 4 control points: ");
+		System.out.print("Correlation value for bezier curve with 4 control points: ");
 		
 		rmsC.doCaculation();
 	}
@@ -100,7 +100,7 @@ public class Main {
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=averagingMethodRecoveredFilePath;
 		
-		System.out.print("RMS value for averaging methods: ");
+		System.out.print("Correlation value for averaging methods: ");
 		rmsC.doCaculation();
 	}
 	
@@ -115,11 +115,11 @@ public class Main {
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=tempReplacementRecoveredFilePath;
 		
-		System.out.print("RMS value for temp replacement (previous): ");
+		System.out.print("Correlation value for temp replacement (previous): ");
 		rmsC.doCaculation();
 	}
 	
-private static void runBackwardTempReplacement(InputData inputData){
+	private static void runBackwardTempReplacement(InputData inputData){
 		
 		TempReplacementBackward tr=new TempReplacementBackward(inputData,tempReplacementBackwardRecoveredFilePath);
 		
@@ -130,7 +130,7 @@ private static void runBackwardTempReplacement(InputData inputData){
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=tempReplacementBackwardRecoveredFilePath;
 		
-		System.out.print("RMS value for backward temp replacement: ");
+		System.out.print("Correlation value for backward temp replacement: ");
 		rmsC.doCaculation();
 	}
 	
@@ -145,7 +145,7 @@ private static void runBackwardTempReplacement(InputData inputData){
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=zeroInsertionRecoveredFilePath;
 		
-		System.out.print("RMS value for zero insertion: ");
+		System.out.print("Correlation value for zero insertion: ");
 		rmsC.doCaculation();
 	}
 

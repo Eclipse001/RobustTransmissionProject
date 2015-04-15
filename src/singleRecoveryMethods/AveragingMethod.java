@@ -51,7 +51,7 @@ public class AveragingMethod {
 					frames.set(index,getLineWithAllZeros());
 				}
 				else{
-					// record the current frame index otherwise
+					// Record the current frame index otherwise.
 					badIndexSet.add(index);
 				}
 				
