@@ -8,6 +8,11 @@ import java.util.ArrayList;
 
 import org.apache.commons.math3.stat.correlation.SpearmansCorrelation;
 
+/**
+ * A class which used to check the differential between Original File and Recovered File
+ * @author xuping Fang, Ji Cheng, Xiaoran Huang
+ *
+ */
 public class CorrelationCalculator{
 	
 	public String originFilePath;
@@ -22,6 +27,9 @@ public class CorrelationCalculator{
 		
 	}
 	
+	/**
+	 * A private method which reads the Original BVH file line by line, stores the frame data of the file in to the attribute of this object.
+	 */
 	private void readOriginalFile(){
 		
 		FileReader fileReader;
@@ -62,6 +70,9 @@ public class CorrelationCalculator{
 	}
 	
 	
+	/**
+	 * A private method which reads the Recovered BVH file line by line, stores the frame data of the file in to the attribute of this object.
+	 */
 	private void readRecoveredFile(){
 		
 		FileReader fileReader;
@@ -101,6 +112,9 @@ public class CorrelationCalculator{
 		
 	}
 	
+	/**
+	 * A private method which Use Spearman Correlation Method to compare the differential between original file and recovered file
+	 */
 	public void doCaculation(){
 		
 		readOriginalFile();
@@ -114,6 +128,7 @@ public class CorrelationCalculator{
 			return;
 		}
 		
+		// initialize the length of each frame
 		String[] test = originalFrames.get(0).split("\\s+");
 		double[] original = new double[frameNum];
 		double[] recovered = new double[frameNum];
@@ -122,8 +137,10 @@ public class CorrelationCalculator{
 		int divider = lineLen;
 		double sum = 0.0;
 		
+		//First loop, confirm the column of each frame
 		for (int i=0;i<lineLen;i++){
 			
+			//Second loop, Go through all the frames
 			for(int j=0;j<frameNum;j++){
 				String[] originalCurrLine = originalFrames.get(j).split("\\s+");
 				String[] recoveredCurrLine = recoveredFrames.get(j).split("\\s+");
@@ -132,7 +149,10 @@ public class CorrelationCalculator{
 				recovered[j] = Double.parseDouble(recoveredCurrLine[i]);
 			}
 			
+			// Core part. Check correlation.
 			double num = sc.correlation(original, recovered);
+			
+			// if result is NaN, remove from testing, else, add to sum
 			if(!(Double.isNaN(num))){
 				sum += num;
 			}

@@ -1,7 +1,9 @@
 package beizerCurveCore;
 
-/** Taken from http://math.stackexchange.com/questions/43947/casteljaus-algorithm-practical-example**/
-
+/**
+ * Bezier curve core algorithm class
+ * Taken from http://math.stackexchange.com/questions/43947/casteljaus-algorithm-practical-example
+ */
 public class Casteljau {
 
     private Double[] initialValues;
@@ -10,6 +12,11 @@ public class Casteljau {
 
     private double[][] b;
 
+    /**
+     * Constructor.
+     * @param initialValues : Array of control point values.
+     * @param n : Number of control points.
+     */
     public Casteljau(Double[] initialValues, int n) {
     	
         this.initialValues = initialValues;
@@ -17,6 +24,10 @@ public class Casteljau {
         this.n = n;
     }
 
+    /**
+     * Initialization method
+     * @param initialValues :  Array of control point values.
+     */
     private void init(Double[] initialValues) {
     	
         for (int i = 0; i < n; i++) {
@@ -24,6 +35,12 @@ public class Casteljau {
         }
     }
 
+    /**
+     * Core algorithm of Casteljau
+     * @param t	: ratio
+     * @param initialValues : control points
+     * @return Return the value on the curve
+     */
     private double evaluate(Double t, Double[] initialValues) {
         init(initialValues);
         for (int j = 1; j < n; j++) {
@@ -34,6 +51,11 @@ public class Casteljau {
         return(b[n-1][0]);
     }
 
+    /**
+     * Return the value on the bezier corresponding to the ratio t.
+     * @param t
+     * @return the value on the bezier corresponding to the ratio t
+     */
     public double getValue(Double t) {
         double val = evaluate(t,initialValues);
         return val;
