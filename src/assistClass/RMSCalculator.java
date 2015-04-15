@@ -15,6 +15,7 @@ public class RMSCalculator{
 	
 	private ArrayList<String> originalFrames;
 	private ArrayList<String> recoveredFrames;
+	
 	private static SpearmansCorrelation sc = new SpearmansCorrelation();
 	
 	public RMSCalculator(){
