@@ -12,6 +12,7 @@ import singleRecoveryMethods.ZeroInsertion;
 
 public class Main {
 	
+	// Settings of the whole simulation will be adjust here.
 	static String originFilePath="C:\\Users\\Xuping Fang\\Documents\\origin.bvh";
 	static String badFilePath="C:\\Users\\Xuping Fang\\Documents\\bad.bvh";
 	
@@ -33,12 +34,14 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		// Run simulation.
 		PackageLossSimulator pls=new PackageLossSimulator(originFilePath,badFilePath,packageCapacity,errorRate);
 		
 		InputData inputData=pls.simulatePackageLoss();
 		
 		System.out.println("=======================Test Results For each methods==========================");
 		
+		// Run different recovery methods.
 		runBezierCurve(inputData);
 		runAveragingMethod(inputData);
 		
@@ -52,8 +55,11 @@ public class Main {
 
 	}
 	
+	// Each function below takes same input, runs the specific recovery method and print the correlation value of original file and the recovered file.
+	// ==================================================================================================================================================
 	private static void runCombinationMethod(InputData inputData){
 		
+		// Setting of the combination method will be adjust here:
 		Boundary avgBoundary=new Boundary(0,10);
 		Boundary bezierCurveBoundary=new Boundary(0,200);
 		Boundary tempReplacementBoundary=new Boundary(201,Integer.MAX_VALUE);
