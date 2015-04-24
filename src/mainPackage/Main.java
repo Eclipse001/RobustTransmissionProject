@@ -117,7 +117,7 @@ public class Main {
 		rmsC.originFilePath=originFilePath;
 		rmsC.recoveredFilePath=combinedRecoveredFilePath;
 		
-		System.out.print("Correlation value for combined method"+combinednumber+": ");
+		System.out.print("Correlation value for combined method "+combinednumber+" : ");
 		
 		rmsC.doCaculation();
 	}
