@@ -1,4 +1,4 @@
-# C414ProjectFinalCodes
+# Robust Transmission project
 
 CMPUT 414 Project Code (Robust Transmission)
 
